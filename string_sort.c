@@ -10,8 +10,34 @@ int next_permutation(int n, char **s)
 	* Return 0 when there is no next permutation and 1 otherwise
 	* Modify array s to its next permutation
 	*/
-    int result = 1;
-    
+    int result = 1, k = -1, l, i, j;
+	//找出最后组前面大于后面的紧挨的一组中的第一个的下标(k后从大到小)
+	for(i = 0; i < n - 1; i++) {
+		if(strcmp(s[i], s[i + 1]) < 0) {
+			k = i;
+		}
+	}
+	if(k == -1) return 0;
+	//找出大于索引为k中最小的字符串索引
+	for(i = k + 1; i < n; i++) {
+		if(strcmp(s[k], s[i]) < 0) {
+			l = i;
+		}
+	}
+	//交换两个数
+	char *temp = s[k];
+	s[k] = s[l];
+	s[l] = temp;
+	//将k后面的数从小到大排列
+	i = k + 1;
+	j = n - 1;
+	while(i < j) {
+		temp = s[i];
+		s[i++] = s[j];
+		s[j--] = temp;
+	}
+	return 1;
+
 }
 
 int main()
